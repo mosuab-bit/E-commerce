@@ -1,31 +1,42 @@
-import { useEffect,useState } from "react"
-import { Product } from "../models/Product"
-import { Container, createTheme, ThemeProvider } from "@mui/material";
-import Catalog from "../../features/catalog/Catalog";
+import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import NavBar from "./NavBar";
-function App() {
-const[products,setProducts] =useState<Product[]>([]);
-useEffect(()=>{
-  fetch('http://localhost:5201/api/products')
-  .then(response =>response.json())
-  .then(data=>setProducts(data))
-  .catch(error => console.error('Error fetching products:', error));
-},[])
+import { Outlet, ScrollRestoration } from "react-router-dom";
+import { useAppSelector } from "../store/store";
 
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-   
-    },
-  
-});
+
+function App() {
+  const {darkMode} = useAppSelector(state => state.ui);
+  const palleteType = darkMode ? 'dark' : 'light'
+  const theme = createTheme({
+    palette: {
+      mode: palleteType,
+      background: {
+        default: (palleteType === 'light') ? '#eaeaea' : '#121212'
+      }
+    }
+  });
+
   return (
     <ThemeProvider theme={theme}>
-    <NavBar/>
-    <Container maxWidth='xl' sx={{ mt: 8 }}>
-      <Catalog products={products}/>
-    </Container>
+      <ScrollRestoration />
+      <CssBaseline />
+      <NavBar />
+      <Box
+        sx={{
+          minHeight: '100vh',
+          background: darkMode 
+            ? 'radial-gradient(circle, #1e3aBa, #111B27)'
+            : 'radial-gradient(circle, #baecf9, #f0f9ff)',
+          py: 6
+        }}
+      >
+        <Container maxWidth='xl' sx={{ mt: 8 }}>
+          <Outlet />
+        </Container>
+      </Box>
+
     </ThemeProvider>
+
   )
 }
 
