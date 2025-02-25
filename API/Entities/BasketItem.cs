@@ -13,5 +13,5 @@ public class BasketItem
     public required Product Product { get; set; }
 
     public int BasketId { get; set; }
-    public Basket Basket { get; set; } = null!;
+    public  Basket Basket { get; set; } = null!;
 }
