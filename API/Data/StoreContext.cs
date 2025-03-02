@@ -23,4 +23,11 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(op
             new IdentityRole {Id ="2ce758b4-8fdc-441c-86d6-6bd2ca9adb0a", Name="Admin",NormalizedName="ADMIN"}
         );
     }
+     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Server=DESKTOP-IMAGLAD;Database=shop;Trusted_Connection=True;TrustServerCertificate=True");
+        }
+    }
 }
