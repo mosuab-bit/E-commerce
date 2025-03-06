@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
-import { Product } from "../../app/models/product"
+import { Product } from "../../app/models/Product"
 import { Link } from "react-router-dom"
 import { useAddBasketItemMutation } from "../basket/basketApi"
 import { currencyFormat } from "../../lib/util"
